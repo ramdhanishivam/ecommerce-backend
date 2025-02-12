@@ -1,0 +1,19 @@
+{
+  "name": "ecommerce-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@elastic/elasticsearch": "^8.17.0",
+    "dotenv": "^16.4.7",
+    "elasticsearch": "^16.7.3",
+    "fastify": "^5.2.1",
+    "mongoose": "^8.10.0"
+  }
+}
