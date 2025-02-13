@@ -1,9 +1,16 @@
 const { esClient } = require('../config/elastic');
 const Product = require('../models/product');
+const { productSchema } = require('../utils/validation')
 
 module.exports = async function (fastify, opts) {
     // Add a product
     fastify.post('/products', async (request, reply) => {
+        const { error } = productSchema.validate(request.body)
+
+        if (error) {
+            reply.status(400).send({error: error.details})
+        }
+
         const product = new Product(request.body);
         await product.save();
 
