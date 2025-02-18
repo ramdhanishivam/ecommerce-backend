@@ -8,6 +8,8 @@ A simple eCommerce backend built with **Fastify**, **MongoDB**, and **Elasticsea
 - **Fastify** for high-performance API routing
 - **MongoDB** for product storage
 - **Elasticsearch** for fast product searching
+- **RabbitMQ** for message queueing and async processing
+- **Joi** for request validation
 - **CRUD operations** for product management
 - **.env support** for environment variables
 
@@ -19,6 +21,7 @@ Ensure you have the following installed:
 - [Node.js](https://nodejs.org/)
 - [MongoDB](https://www.mongodb.com/try/download/community) (or MongoDB Atlas)
 - [Elasticsearch](https://www.elastic.co/downloads/elasticsearch)
+- [RabbitMQ](https://www.rabbitmq.com/download.html) (or run via Docker)
 
 ---
 
@@ -35,14 +38,15 @@ npm install
 ```
 
 ### 3. Configure Environment Variables
-Create a `.env` file and add your database and Elasticsearch credentials:
+Create a `.env` file and add your database, Elasticsearch, and RabbitMQ credentials:
 ```env
 MONGO_URI=mongodb://127.0.0.1:27017/ecommerce
 ELASTICSEARCH_HOST=https://your-elasticsearch-url
 ELASTICSEARCH_API_KEY=your-elastic-api-key
+RABBITMQ_URL=amqp://localhost
 ```
 
-### 4. Start MongoDB & Elasticsearch
+### 4. Start MongoDB, Elasticsearch & RabbitMQ
 Run MongoDB locally:
 ```sh
 mongod
@@ -51,10 +55,19 @@ Start Elasticsearch:
 ```sh
 elasticsearch
 ```
+Start RabbitMQ:
+```sh
+rabbitmq-server start
+```
 
-### 5. Start the Server
+### 5. Start the Server & Order Worker
 ```sh
 npm start
+```
+
+### 6. Start the Order Worker
+```sh
+node workers/orderWorker.js
 ```
 The server runs on **http://localhost:3000/**
 
@@ -81,20 +94,23 @@ POST /products
 GET /products
 ```
 
-
-### **5. Search Products using Elasticsearch**
+### **3. Search Products using Elasticsearch**
 ```sh
 GET /search?query=nike
 ```
 
----
-
-
-## Future Enhancements
-- Add authentication with **JWT**
-- RabbitMQ
-- Implement pagination
-
+### **4. Place an Order (Uses RabbitMQ)**
+```sh
+POST /order
+```
+**Body:**
+```json
+{
+  "userId": "12345",
+  "productId": "nike_shoes",
+  "quantity": 2
+}
+```
 ---
 
 ## License

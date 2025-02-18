@@ -2,6 +2,7 @@ const fastify = require('fastify')({logger: true});
 require("dotenv").config();
 const connectDB = require('./config/db');
 fastify.register(require('./routes/productRoutes'));
+fastify.register(require('./routes/orderRoutes'));
 const {checkElastic} = require('./config/elastic');
 
 checkElastic();

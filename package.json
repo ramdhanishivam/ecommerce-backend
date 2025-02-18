@@ -11,6 +11,7 @@
   "description": "",
   "dependencies": {
     "@elastic/elasticsearch": "^8.17.0",
+    "amqplib": "^0.10.5",
     "dotenv": "^16.4.7",
     "elasticsearch": "^16.7.3",
     "fastify": "^5.2.1",

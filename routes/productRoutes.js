@@ -15,6 +15,9 @@ module.exports = async function (fastify, opts) {
         await product.save();
 
         // Index product in ElasticSearch
+        // Adds a JSON document to the specified data stream or index and makes it searchable. 
+        // If the target is an index and the document already exists, the request updates the document 
+        // and increments its version.
         await esClient.index({
             index: 'products',
             id: product._id.toString(),
