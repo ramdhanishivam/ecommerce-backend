@@ -1,5 +1,5 @@
 const { esClient } = require('../config/elastic');
-const Product = require('../models/product');
+const Product = require('../models/Product');
 const { productSchema } = require('../utils/validation')
 
 module.exports = async function (fastify, opts) {
