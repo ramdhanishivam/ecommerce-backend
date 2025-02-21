@@ -1,17 +1,19 @@
-const fastify = require("fastify");
 const {publishQueue} = require("../utils/rabbitmq");
 const User = require("../models/User");
 const Product = require("../models/Product");
 const Order = require("../models/Order");
+const {orderSchema} = require("../utils/validation");
 
 module.exports = async function (fastify, opts) {
 
     fastify.post('/order', async (request, reply) => {
         try {
-            const {userId, items } = request.body;
-            
+            const { error } = orderSchema.validate(request.body);
+            error && reply.send({ message: error.message });
+
+            const { userId, items } = request.body;
             const userExists = await User.findById(userId);
-            if (!userExists) return reply.status(404).send({message: "invlaid user id"});
+            if (!userExists) return reply.status(404).send({ message: "invlaid user id" });
     
             let totalAmount = 0;
             for (const item of items) {

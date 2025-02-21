@@ -7,4 +7,16 @@ const productSchema = Joi.object({
     category: Joi.string().valid("Footwear", "Clothing", "Electronics").required()
 })
 
-module.exports = { productSchema };
+const orderSchema = Joi.object({
+    userId: Joi.string().required(),
+    items: Joi.array().items(Joi.object({
+        productId: Joi.string().required(),
+        quantity: Joi.number().min(1).required(),
+        price: Joi.number().min(0).required(),
+    })),
+    totalAmount: Joi.number().min(0),
+    status: Joi.string(),
+    createdAt: Joi.date()
+})
+
+module.exports = { productSchema, orderSchema };
